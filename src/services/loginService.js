@@ -1,8 +1,8 @@
-const { User } = require('../models');
+const { User } = require('../database/models');
 
 const loginService = async (email, password) => {
   const user = await User.findOne({ where: { email } });
-  console.log(user);
+  console.log('loginService.js ~ loginService ~ user', user);
   if (!user || user.password !== password) throw new Error();
   return user;
 };
