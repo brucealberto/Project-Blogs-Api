@@ -22,6 +22,7 @@ app.post('/categories', authToken, categoriesController.create);
 
 app.get('/user/:id', authToken, listById);
 app.get('/user', authToken, listAll);
+app.get('/categories', authToken, categoriesController.listAll);
 
 // ...
 
