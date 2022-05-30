@@ -21,16 +21,31 @@ const create = async (req, res) => {
 const listAll = async (req, res) => {
   try {
     const user = await userService.listAll();
-    // generateJWT(user);
     return res.status(200).json(user);
   } catch (error) {
     return res.status(401).end();
   }
 };
 
+const listById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log('🚀 ~ file: userController.js ~ line 33 ~ listById ~ id', id);
+    const listUserId = await userService.listById(id);
+    console.log('🚀 ~ file: userController.js ~ line 35 ~ listById ~ listUserId', listUserId);
+    return res.status(200).json(listUserId);
+  } catch (error) {
+    console.log(error.message);
+    return res.status(404).json({
+      message: 'User does not exist',
+    });
+  }
+};
+
 module.exports = {
   create,
   listAll,
+  listById,
 };
 
 /**
