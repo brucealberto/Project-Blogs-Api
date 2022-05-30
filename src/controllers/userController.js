@@ -1,13 +1,16 @@
 const userService = require('../services/userService');
 const generateJWT = require('../utils/generateJWT');
 
-const userController = async (req, res) => {
+const create = async (req, res) => {
   try {
     const { displayName, email, password, image } = req.body;
-    const createUser = await userService.create(displayName, email, password, image);
-    
+    const createUser = await userService.create(
+      displayName,
+      email,
+      password,
+      image,
+    );
     const token = generateJWT(createUser);
-
     return res.status(201).json({ token });
   } catch (error) {
     console.log(error.message);
@@ -15,8 +18,19 @@ const userController = async (req, res) => {
   }
 };
 
+const listAll = async (req, res) => {
+  try {
+    const user = await userService.listAll();
+    // generateJWT(user);
+    return res.status(200).json(user);
+  } catch (error) {
+    return res.status(401).end();
+  }
+};
+
 module.exports = {
-  userController,
+  create,
+  listAll,
 };
 
 /**
