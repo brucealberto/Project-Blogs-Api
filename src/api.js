@@ -1,6 +1,7 @@
 const express = require('express');
 const { loginController } = require('./controllers/loginController');
 const { create, listAll, listById } = require('./controllers/userController');
+const categoriesController = require('./controllers/categoriesController');
 const loginMiddleware = require('./middlewares/loginMidlleware');
 const {
   validateUser,
@@ -17,6 +18,8 @@ app.use(express.json());
 
 app.post('/login', loginMiddleware, loginController);
 app.post('/user', validateUser, validatePassword, validateEmail, create);
+app.post('/categories', authToken, categoriesController.create);
+
 app.get('/user/:id', authToken, listById);
 app.get('/user', authToken, listAll);
 
