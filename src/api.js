@@ -2,7 +2,9 @@ const express = require('express');
 const { loginController } = require('./controllers/loginController');
 const { create, listAll, listById } = require('./controllers/userController');
 const categoriesController = require('./controllers/categoriesController');
+const postCategoryService = require('./controllers/postCategoryController');
 const loginMiddleware = require('./middlewares/loginMidlleware');
+const validatePostCategory = require('./middlewares/validatePostCategory');
 const {
   validateUser,
   validatePassword,
@@ -19,6 +21,7 @@ app.use(express.json());
 app.post('/login', loginMiddleware, loginController);
 app.post('/user', validateUser, validatePassword, validateEmail, create);
 app.post('/categories', authToken, categoriesController.create);
+app.post('/post', authToken, validatePostCategory, postCategoryService.create);
 
 app.get('/user/:id', authToken, listById);
 app.get('/user', authToken, listAll);
